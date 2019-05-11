@@ -1,21 +1,52 @@
-// minimum value in array.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+
 
 #include "pch.h"
 #include <iostream>
+#include <array>
+
+using namespace std; 
+
+const size_t arraySize{ 5 };
+
+int minValue(array<double, arraySize> b, size_t index, double min) {
+
+	if (index == b.size() - 1)					//ensure function doesnt go out of bounds
+	{
+		if (b[index] < min)						// compare last element to min
+			min = b[index];						// if last element smaller than min, output last element
+	}											
+	else {
+		if (b[index] < min)						//compare the current index to the min value (initially, min is firstElement)
+			min = b[index];
+
+		min = minValue(b, index + 1, min);		// call the function on the following index
+												//function loops through the whole array 									
+												//if the last element is bigger than the current min, output current min 
+	}
+
+	return min;
+}
+
 
 int main()
 {
-    std::cout << "Hello World!\n"; 
+	array < double, arraySize > a{};
+	double x = 0;
+	
+	for (int i = 0; i < a.size(); ++i) {
+		cout << "Input 5 values in an array. The minimum value will be found" << endl;
+		cin >> x;
+		a[i] = x;
+	}
+	
+	int min;
+	int firstElement = a[0];
+	int index = 0;
+
+	min = minValue(a, index, firstElement);
+
+	cout << "the smallest value is " << min << endl;
+
+	return 0;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
